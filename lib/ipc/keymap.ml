@@ -10,4 +10,5 @@ type t =
       { keybind : string
       ; mode : string option
       } [@name "unbind"]
+  | Unbind_all of { mode : string option } [@name "unbind-all"]
 [@@deriving yojson]

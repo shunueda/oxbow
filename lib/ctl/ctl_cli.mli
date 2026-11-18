@@ -87,6 +87,9 @@ val extent_conv : Oxbow_core.Extent.t Cmdliner.Arg.conv
     keysym, and/or button. *)
 val keybind_arg : string Cmdliner.Term.t
 
+val keybind_arg_opt : string option Cmdliner.Term.t
+val all_flag : bool Cmdliner.Term.t
+
 (** An optional [--mode MODE] flag naming the keymap mode a binding belongs to;
     [None] means the default mode. *)
 val mode_flag : string option Cmdliner.Term.t

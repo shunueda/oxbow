@@ -297,11 +297,10 @@ let extent_conv =
   Arg.Conv.make ~docv:"EXTENT" ~parser ~pp ()
 ;;
 
-let keybind_arg =
+let keybind_arg_opt_foo =
   let open Cmdliner in
   Arg.(
-    required
-    & pos ~rev:true 0 (some string) None
+    pos ~rev:true 0 (some string) None
     & info
         []
         ~docv:"KEYBIND"
@@ -312,6 +311,9 @@ let keybind_arg =
            prefixed with 'Btn_' followed by [0-9], left, right, middle, side, extra, \
            forward, back, or task.")
 ;;
+
+let keybind_arg_opt = Arg.(value & keybind_arg_opt_foo)
+let keybind_arg = Arg.(required & keybind_arg_opt_foo)
 
 let mode_flag =
   let open Cmdliner in
@@ -1038,6 +1040,8 @@ let human_flag =
     & flag
     & info [ "h"; "human" ] ~doc:"Render each event as one flat key=value line.")
 ;;
+
+let all_flag = Arg.(value & flag & info [ "a"; "all" ] ~doc:"NOMERGE")
 
 let stream_cmd ~name ~doc term =
   let open Cmdliner.Term.Syntax in

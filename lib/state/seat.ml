@@ -188,6 +188,17 @@ let clear_bindings s =
   s.pointer_bindings <- []
 ;;
 
+let clear_mode_bindings s ?(mode = Mode.normal) () =
+  s.xkb_bindings
+  |> List.filter (fun (k : Xkb_binding.t) -> Mode.equal k.mode mode)
+  |> List.iter (fun (k : Xkb_binding.t) -> Emit.destroy_xkb_binding k.obj);
+  s.pointer_bindings
+  |> List.filter (fun (p : Pointer_binding.t) -> Mode.equal p.mode Mode.normal)
+  |> List.iter (fun (p : Pointer_binding.t) -> Emit.destroy_pointer_binding p.obj);
+  s.xkb_bindings <- [];
+  s.pointer_bindings <- []
+;;
+
 let focused_window s =
   match s.output with
   | Some o -> Output.focused_window o

@@ -256,4 +256,8 @@ let handle (wm : Wm.t) seat (keymap : Keymap.t) =
     if Seat.unbind seat ?mode mods key
     then Ok None
     else Error (Printf.sprintf "no binding for %S" bind.keybind)
+  | Unbind_all bind ->
+    let* mode = resolve_mode bind.mode in
+    Seat.clear_mode_bindings seat ?mode ();
+    Ok None
 ;;
